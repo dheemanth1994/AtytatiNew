@@ -1,0 +1,107 @@
+﻿@model Atyati.Models.Employees
+
+@{
+    ViewData["Title"] = "Details";
+}
+@{ 
+    var photoPath = "~/images/" + (Model.PhotoPath ?? "noimage.png");
+}
+<style>
+    dt {
+        text-align: left !important;
+    }
+</style>
+<h2>Details</h2>
+<div class="row">
+    <div class="col-xs-8">
+        <div>
+            <h4>Employee</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.MiddleName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.MiddleName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Password)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Salary)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Salary)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Role)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Role)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.StartDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.DepartmentName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.DepartmentName)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="col-xs-3">
+        <div class="card-body text-center">
+            <img class="card-img-top" src="@photoPath" asp-append-version="true" />
+
+        </div>
+
+    </div>
+</div>
+
+
+
+ 
+
+        @section Menu
+            {
+            @Html.ActionLink("Home", "Home")
+            <br />
+            @Html.ActionLink("Product", "GetAllProducts")
+            <br />
+            @Html.ActionLink("Sales", "GetSales")
+
+
+        }

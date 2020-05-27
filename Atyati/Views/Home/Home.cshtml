@@ -1,0 +1,360 @@
+﻿@model IEnumerable<Atyati.Models.Employees>
+
+@{
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Category);
+    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.TotalPrice);
+
+    var XLabelsSold = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Product);
+    var YValuesSold = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductTotalPrice);
+
+}
+
+<style>
+    .customDiv {
+        margin: 1px;
+        /*min-height: 300px;*/
+        /*max-height: 400px;*/
+        text-align: center;
+        font-size: large;
+           
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap Example</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="CustomStyles.css" rel="stylesheet" />
+
+
+<h2>Home</h2>
+
+
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="customDiv">Category Chart</div>
+        <div class="chart-container">
+            <canvas id="chartPie" style="height:500px"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-5 ">
+
+
+        <div class="customDiv">
+
+            <div class="chart-container">
+                <canvas id="chart" style=" height:500px"></canvas>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-2" style="background-color:green;">
+
+
+        <div class="customDiv" style="vertical-align: text-top;">Total Sales</div>
+        <b style="padding:50px">@ViewBag.Sum</b>
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <table class="table responsive" id="myTable">
+            <thead>
+                <tr>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.EmployeeId)
+                        </th>*@
+                    <th>
+                        @Html.DisplayName("ID")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.Password)
+                        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+                    <th>Edit / Delete</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+
+
+@section Menu
+    {
+    @Html.ActionLink("Create New User", "Create")
+    <br>
+    @Html.ActionLink("Product", "GetAllProducts")
+    <br />
+    @Html.ActionLink("Sales", "GetSales")
+
+
+}
+
+<link href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" rel="stylesheet" />
+@* Load datatable js *@
+@section Scripts{
+    <script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="~/datatables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.4/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.4/js/responsive.bootstrap.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            debugger;
+            $('#myTable').DataTable({
+
+                "ajax": {
+                    "url": "/Home/Index",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "employeeId", "autoWidth": true },
+                    { "data": "firstName", "autoWidth": true },
+                    { "data": "lastName", "autoWidth": true },
+                    { "data": "email", "autoWidth": true },
+                    { "data": "phoneNumber", "autoWidth": true },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: '<a href="" class="editor_edit">Edit</a> / <a href="" class="editor_remove">Delete</a>'
+                    },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: '<a href="" class="editor_Details">Details</a>'
+                    }
+
+                    //{ "data": "City", "autoWidth": true },
+                    //{ "data": "PostalCode", "autoWidth": true }
+                ],
+                responsive: true,
+            });
+            $('#myTable').on('click', 'a.editor_remove', function (e) {
+                var f = $(this).closest('tr');
+                var id = f[0].cells[0].innerText;
+                var r = confirm("Are You Sure to delete the  record" + f[0].cells[0].innerText);
+                debugger;
+                if (r == true) {
+                    debugger;
+                    e.preventDefault();
+                    console.log(f[0].cells[0].innerText);
+                    console.log(r);
+                    console.log("/Home/Delete?id=" + id);
+                    location.href = "/Home/Delete?id=" + id;
+                } else {
+                    console.log(r);
+                    e.preventDefault();
+                }
+
+
+
+
+            });
+
+            $('#myTable').on('click', 'a.editor_edit', function (e) {
+                e.preventDefault();
+                var f = $(this).closest('tr');
+                var id = f[0].cells[0].innerText;
+                console.log(f[0].cells[0].innerText);
+                location.href = "/Home/Edit?id=" + id;
+            });
+        });
+
+        $('#myTable').on('click', 'a.editor_Details', function (e) {
+            e.preventDefault();
+            var f = $(this).closest('tr');
+            var id = f[0].cells[0].innerText;
+            console.log(f[0].cells[0].innerText);
+            location.href = "/Home/Details?id=" + id;
+        });
+
+
+    </script>
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+        $(function () {
+    var chartName = "chart";
+        var ctx = document.getElementById(chartName).getContext('2d');
+        var data = {
+                labels: @Html.Raw(XLabels),
+                datasets: [{
+                    label: "Category Chart",
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 0, 0)',
+                        'rgba(0, 255, 0)',
+                        'rgba(0, 0, 255)',
+                        'rgba(192, 192, 192)',
+                        'rgba(255, 255, 0)',
+                        'rgba(255, 0, 255)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 0, 0)',
+                        'rgba(0, 255, 0)',
+                        'rgba(0, 0, 255)',
+                        'rgba(192, 192, 192)',
+                        'rgba(255, 255, 0)',
+                        'rgba(255, 0, 255)'
+                    ],
+                    borderWidth: 1,
+                    data: @Html.Raw(YValues)
+    }]
+            };
+
+var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,164,0.2)"
+                        }
+}],
+                    xAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            };
+
+       var myChart = new  Chart(ctx, {
+                options: options,
+                data: data,
+                type:'line'
+
+            });
+        });
+</script>
+<script type="text/javascript">
+
+        $(function () {
+            var chartName = "chartPie";
+        var ctx = document.getElementById(chartName).getContext('2d');
+        var data = {
+                labels: @Html.Raw(XLabelsSold),
+                datasets: [{
+                    label: "Product Chart",
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 0, 0)',
+                        'rgba(0, 255, 0)',
+                        'rgba(0, 0, 255)',
+                        'rgba(192, 192, 192)',
+                        'rgba(255, 255, 0)',
+                        'rgba(255, 0, 255)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 0, 0)',
+                        'rgba(0, 255, 0)',
+                        'rgba(0, 0, 255)',
+                        'rgba(192, 192, 192)',
+                        'rgba(255, 255, 0)',
+                        'rgba(255, 0, 255)'
+                    ],
+                    borderWidth: 1,
+                    data: @Html.Raw(YValuesSold)
+    }]
+            };
+
+var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,164,0.2)"
+                        }
+}],
+                    xAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            };
+
+       var myChart = new  Chart(ctx, {
+                options: options,
+                data: data,
+                type:'pie'
+
+            });
+        });
+</script>
+Result

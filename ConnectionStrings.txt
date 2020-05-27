@@ -1,0 +1,81 @@
+atyati20200511090059dbserver.database.windows.net
+ananddheemanth@gmail.com@atyati20200511090059dbserver
+
+Server=  (localdb)\\MSSQLLocalDB;Database=Atyati;Trusted_Connection=True;MultipleActiveResultSets=true
+
+Data Source=tcp:atyati20200511090059dbserver.database.windows.net,1433;Initial Catalog=Atyati20200511090059_db;Integrated Security=False;Persist Security Info=False;User ID=ananddheemanth@gmail.com@atyati20200511090059dbserver;Password=Subbu14146
+
+ This does'nt work "DefaultConnection": "Server=  (localdb)\\MSSQLLocalDB;Database=Atyati;Trusted_Connection=True;MultipleActiveResultSets=true"
+"DefaultConnection": "Data Source=tcp:atyati20200511090059dbserver.database.windows.net,1433;Initial Catalog=Atyati20200511090059_db;Integrated Security=False;Persist Security Info=False;User ID=ananddheemanth@gmail.com@atyati20200511090059dbserver;Password=Subbu1146"
+
+ "DefaultConnection": "Data Source=DESKTOP-KBKQF12\\DEEMU;Database=Atyati;Trusted_Connection=true"
+Scaffold-DbContext "Server=DESKTOP-KBKQF12\DEEMU;Database=Atyati;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+
+Scaffold-DbContext "Server=DESKTOP-KBKQF12\DEEMU;Database=Atyati;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+Scaffold-DbContext "Server=DESKTOP-KBKQF12\DEEMU;Database=Atyati;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force (to keep models in sync with db )
+
+
+
+192.168.3.12
+
+ 
+
+
+var editor; // use a global for the submit and return data rendering in the examples
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
+namespace Atyati.Models
+{
+    public partial class Employees
+    {
+        [Key]
+        public int EmployeeId { get; set; }
+
+        [Required]
+        [Display(Name = "Employee Name")]
+        public string FirstName { get; set; }
+        [Required]
+        [Display(Name = "Middle Name")]
+        public string MiddleName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
+        [Required]
+        public int? Salary { get; set; }
+        [Required]
+        public string Role { get; set; }
+        public DateTime? StartDate { get; set; }
+        public string DepartmentName { get; set; }
+        [NotMapped]
+        public List<SelectListItem> DepartmentNames { get; } = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "IT", Text = "IT" },
+        new SelectListItem { Value = "HR", Text = "HR" },
+        new SelectListItem { Value = "PMO", Text = "PMO"  },
+    };
+    }
+}
+
+DESKTOP-KBKQF12\DEEMU
+
+Git to Replace
+$ git add -A
+$ git commit -m commit3
+$ git push origin master
+
+
+
+https://portal.azure.com/#blade/HubsExtension/DeploymentDetailsBlade/overview/id/%2Fsubscriptions%2F4358cda1-c9ce-49a5-9357-e35771bf114a%2FresourceGroups%2FAtyati20200511090059ResourceGroup%2Fproviders%2FMicrosoft.Resources%2Fdeployments%2FMicrosoft.Web-FunctionApp-Portal-e839a79b-8b6d/packageId/Microsoft.FunctionApp/packageIconUri/https%3A%2F%2Fcatalogartifact.azureedge.net%2Fpublicartifacts%2FMicrosoft.FunctionApp-8.1.3%2FMedium.png/primaryResourceId/%2Fsubscriptions%2F4358cda1-c9ce-49a5-9357-e35771bf114a%2Fresourcegroups%2FAtyati20200511090059ResourceGroup%2Fproviders%2FMicrosoft.Web%2Fsites%2Fazzfun/provisioningHash/customize-to-open-functionapp-iframe-blade/createBlade/%7B%22bladeName%22%3A%22AppServiceFunctionAppCreateV3Blade%22%2C%22extension%22%3A%22WebsitesExtension%22%7D

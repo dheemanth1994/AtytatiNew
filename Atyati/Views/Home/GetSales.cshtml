@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Atyati.Models.Sold>
+
+@{
+    ViewData["Title"] = "Sold Items";
+}
+
+<h2>Sold Items</h2>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+
+<div margin="2px">
+    <input id="myInput" type="text" placeholder="Search.." />
+</div>
+<table class="table" id="tblsales">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+<div>
+    <button type="button" id="fixedbutton" style="margin:2px" class="btn btn-info"> Go to Cart </button>
+</div>
+
+<div>
+    <span> <b>Total Price:</b> @ViewBag.Sum</span>
+</div>
+<script>
+    $('#fixedbutton').click(function () {
+        /**/
+        location.href = "/Home/GetSales2";
+        /**/
+    });
+    $(document).ready(function () {
+        debugger;
+        $("#myInput").on("keyup", function () {
+            debugger;
+            var value = $(this).val().toLowerCase();
+            $("#tblsales tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+@section Menu
+    {
+    @Html.ActionLink("Home", "Home")
+    <br />
+    @Html.ActionLink("Create New User", "Create")
+    <br>
+    @Html.ActionLink("Product", "GetAllProducts")
+    <br />
+    @Html.ActionLink("Sales", "GetSales")
+}
